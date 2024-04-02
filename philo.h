@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/02 12:13:59 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/02 20:55:38 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <pthread.h> // mutex: init, destroy, lock, unlock
 						// thread: create,join, detach
+# include <stdbool.h> // bool
 # include <stdint.h>
 # include <stdio.h>    // printf
 # include <stdlib.h>   // malloc, free
@@ -22,29 +23,66 @@
 # include <unistd.h>   // write, usleep
 
 # define MAX_PHILO 200
-# define RESET "\033[0m"
-# define BLACK "\033[30m"
-# define RED "\033[1;31m"
-# define GREEN "\033[32m"
-# define YELLOW "\033[33m"
-# define BLUE "\033[34m"
-# define MAGENTA "\033[35m"
-# define CYAN "\033[36m"
-# define WHITE "\033[37m"
+# define INT_MAX 2147483647
 
-// typedef struct t_philo
-// {
-// } s_philo
+# define RESET "\033[0m"
+# define RED "\033[1;31m"     // errors input
+# define GREEN "\033[1;32m"   // philo eating
+# define YELLOW "\033[1;33m"  // philo thinking
+# define MAGENTA "\033[1;35m" // philo died
+# define CYAN "\033[1;36m"    // philo sleeping
+
+# define EAT "is eating 🍝"
+# define SLEEP "is sleeping 💤"
+# define THINK "is thinking 💭"
+# define FORK "has taken a fork 🍴"
+# define DEAD "died 💀"
+
+typedef struct s_input
+{
+	int				philo_count;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				meals;
+}					t_input;
+
+typedef struct s_philo
+{
+	int				id;
+	pthread_t		philo_thr;
+	int				meals_count;
+	// bool			is_full;
+	uint64_t		time_to_die;
+	// pthread_mutex_t	lock;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+
+}					t_philo;
+
+typedef struct s_table
+{
+	int				philos;
+	t_input			input;
+	t_philo			*philo;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	lock;
+	pthread_t		monitor_thr;
+	// int				meals;
+	// pthread_mutex_t	print_lock;
+
+}					t_table;
 
 // ---------------UTILS----------------
-void	ft_error(int code);
+void				ft_error(int code);
 
 // ---------------PARSING---------------
-int		parse_input(char **av);
+// int					parse_input(char **av);
+int					init_input(int ac, char **av, t_table *table);
 
 // ---------------LIBFT----------------
-int		ft_atoi(char *str);
-int		ft_strlen(char *str);
-void	ft_putstr_fd(char *str, int fd);
+int					ft_atoi(char *str);
+int					ft_strlen(char *str);
+void				ft_putstr_fd(char *str, int fd);
 
 #endif

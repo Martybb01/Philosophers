@@ -6,7 +6,7 @@ RM          = rm -f
 
 SRCS := main.c \
 utils.c \
-parsing.c \
+init_parse_input.c \
 libft.c \
 
 OBJS_MAIN := $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/02 12:13:20 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/02 19:57:08 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_error(int code)
 	if (code == 3)
 	{
 		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid time\n", 2);
+		ft_putstr_fd("Error: Invalid time ⏰\n", 2);
 	}
 	if (code == 4)
 	{
