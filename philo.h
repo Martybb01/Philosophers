@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/03 14:23:38 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:48:56 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,18 @@
 # define MAGENTA "\033[1;35m" // philo died
 # define CYAN "\033[1;36m"    // philo sleeping
 
-# define EAT "is eating 🍝"
-# define SLEEP "is sleeping 💤"
-# define THINK "is thinking 💭"
-# define FORK "has taken a fork 🍴"
+# define EAT "is eating 🍝\n"
+# define SLEEP "is sleeping 💤\n"
+# define THINK "is thinking 💭\n"
+# define FORK "has taken a fork 🍴\n"
 # define DEAD "died 💀"
+
+# define WRONG_ARG_NUM "Error: wrong number of arguments ❌\n"
+# define INVALID_PHILO "Error: Invalid philo input 🧐\n"
+# define INVALID_DEAD "Error: Invalid time_to_die ⏰\n"
+# define INVALID_EAT "Error: Invalid time_to_eat ⏰\n"
+# define INVALID_SLEEP "Error: Invalid time_to_sleep ⏰\n"
+# define INVALID_MEALS "Error: Invalid meals_count 🍝\n"
 
 typedef struct s_input
 {
@@ -76,9 +83,9 @@ typedef struct s_table
 // ---------------UTILS----------------
 void				ft_error(int code);
 
-// ---------------PARSING---------------
-// int					parse_input(char **av);
+// ---------------INIT---------------
 int					init_input(int ac, char **av, t_table *table);
+int					init_philo(t_table *table);
 
 // ---------------LIBFT----------------
 int					ft_atoi(char *str);
@@ -86,6 +93,5 @@ int					ft_strlen(char *str);
 void				ft_putstr_fd(char *str, int fd);
 
 // ---------------INIT-----------------
-int					init_philo(t_table *table);
 
 #endif

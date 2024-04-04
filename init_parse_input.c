@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:35:49 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/03 12:54:17 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:51:40 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,41 +42,17 @@ int	init_input_struct(int ac, char **av, t_table *table)
 int	init_input(int ac, char **av, t_table *table)
 {
 	if (ac != 5 && ac != 6)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: wrong number of arguments ❌\n", 2);
-		return (1);
-	}
+		return (printf(RED WRONG_ARG_NUM RESET), 1);
 	if (digit_check(av[1]) || ft_atoi(av[1]) <= 0 || ft_atoi(av[1]) > MAX_PHILO)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid philo input 🧐\n", 2);
-		return (1);
-	}
+		return (printf(RED INVALID_PHILO RESET), 1);
 	if (digit_check(av[1]) || ft_atoi(av[2]) <= 0)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid time_to_die ⏰\n", 2);
-		return (1);
-	}
+		return (printf(RED INVALID_DEAD RESET), 1);
 	if (digit_check(av[3]) || ft_atoi(av[3]) <= 0)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid time_to_eat ⏰\n", 2);
-		return (1);
-	}
+		return (printf(RED INVALID_EAT RESET), 1);
 	if (digit_check(av[4]) || ft_atoi(av[4]) <= 0)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid time_to_sleep ⏰\n", 2);
-		return (1);
-	}
+		return (printf(RED INVALID_SLEEP RESET), 1);
 	if (av[5] && (digit_check(av[5]) || ft_atoi(av[5]) <= 0))
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid meals 🍝\n", 2);
-		return (1);
-	}
+		return (printf(RED INVALID_MEALS RESET), 1);
 	if (init_input_struct(ac, av, table) == 1)
 		return (1);
 	printf("philo_count: %d\n", table->input.philo_count);

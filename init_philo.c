@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/03 23:02:37 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:10:17 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,18 @@
 
 void	*philo_life(t_philo *philo)
 {
-	printf("philo id: %d\n", philo->id);
+	printf("philo %d is thinking\n", philo->id);
 	pthread_mutex_lock(philo->left_fork);
+	printf("philo %d has taken a fork\n", philo->id);
+	pthread_mutex_lock(philo->right_fork);
+	printf("philo %d is eating\n", philo->id);
+	usleep(philo->time_to_die * 1000);
 	philo->meals_eaten++;
 	printf("melas eaten: %d\n", philo->meals_eaten);
+	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
+	printf("philo %d is sleeping\n", philo->id);
+	usleep(philo->time_to_die * 1000);
 	return (NULL);
 }
 
@@ -57,7 +64,6 @@ int	init_philo(t_table *table)
 	printf("table->input.philo_count: %d\n", table->input.philo_count);
 	while (i < table->input.philo_count)
 	{
-		printf("philo id: %d\n", table->philo[i].id);
 		if (pthread_create(&table->philo[i].philo_thr, NULL, (void *)philo_life,
 				&table->philo[i]))
 			ft_error(5);
