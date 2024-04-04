@@ -8,6 +8,7 @@ SRCS := main.c \
 utils.c \
 init_parse_input.c \
 libft.c \
+init_philo.c \
 
 OBJS_MAIN := $(SRCS:.c=.o)
 

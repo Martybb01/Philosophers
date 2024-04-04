@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   init_parse_input.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:35:49 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/02 20:55:55 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:54:17 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	init_input_struct(int ac, char **av, t_table *table)
 	table->input.time_to_eat = ft_atoi(av[3]);
 	table->input.time_to_sleep = ft_atoi(av[4]);
 	if (ac == 6)
-		table->input.meals = ft_atoi(av[5]);
+		table->input.meals_count = ft_atoi(av[5]);
 	else
-		table->input.meals = -1;
+		table->input.meals_count = -1;
 	return (0);
 }
 
@@ -83,6 +83,6 @@ int	init_input(int ac, char **av, t_table *table)
 	printf("time_to_die: %d\n", table->input.time_to_die);
 	printf("time_to_eat: %d\n", table->input.time_to_eat);
 	printf("time_to_sleep: %d\n", table->input.time_to_sleep);
-	printf("meals: %d\n", table->input.meals);
+	printf("meals: %d\n", table->input.meals_count);
 	return (0);
 }

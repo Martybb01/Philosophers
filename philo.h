@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/02 20:55:38 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:23:38 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ typedef struct s_input
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				meals;
+	int				meals_count;
 }					t_input;
 
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		philo_thr;
-	int				meals_count;
+	int				meals_eaten;
 	// bool			is_full;
 	uint64_t		time_to_die;
 	// pthread_mutex_t	lock;
@@ -84,5 +84,8 @@ int					init_input(int ac, char **av, t_table *table);
 int					ft_atoi(char *str);
 int					ft_strlen(char *str);
 void				ft_putstr_fd(char *str, int fd);
+
+// ---------------INIT-----------------
+int					init_philo(t_table *table);
 
 #endif
