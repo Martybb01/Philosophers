@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/04 20:10:17 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:12:31 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,25 @@ void	*philo_life(t_philo *philo)
 	return (NULL);
 }
 
-int	init_philo(t_table *table)
+void	init_malloc(t_table *table)
 {
-	int	i;
-
 	table->philo = malloc(sizeof(t_philo) * table->input.philo_count);
 	if (!table->philo)
 		ft_error(4);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->input.philo_count);
 	if (!table->forks)
 		ft_error(4);
+	table->philo->philo_thr = (pthread_t)malloc(sizeof(pthread_t)
+			* table->input.philo_count);
+	if (!table->philo->philo_thr)
+		ft_error(4);
+}
+
+int	init_philo(t_table *table)
+{
+	int	i;
+
+	init_malloc(table);
 	i = 0;
 	printf("table->input.philo_count: %d\n", table->input.philo_count);
 	while (i < table->input.philo_count)
@@ -57,6 +66,7 @@ int	init_philo(t_table *table)
 		table->philo[i].right_fork = &table->forks[(i + 1)
 			% table->input.philo_count];
 		table->philo[i].time_to_die = table->input.time_to_die;
+		pthread_mutex_init(&table->philo[i].lock, NULL);
 		i++;
 	}
 	printf("philo initialized\n");

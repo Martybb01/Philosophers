@@ -18,7 +18,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_MAIN)
-	$(CC) $(OBJS_MAIN) -o $(NAME)
+	$(CC) $(OBJS_MAIN) -o $(NAME) -lpthread
 	echo "${BOLD}Creating  -> ${RED}$(NAME)${NO_COLOR}"
 	${MAKE} spiderman
 

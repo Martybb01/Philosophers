@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/04 20:48:56 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:12:18 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_philo
 	int				meals_eaten;
 	// bool			is_full;
 	uint64_t		time_to_die;
-	// pthread_mutex_t	lock;
+	pthread_mutex_t	lock;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 
