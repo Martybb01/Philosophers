@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/04 20:24:30 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/06 19:37:24 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @return The current time in milliseconds as a long.
  * @note track how long a philo has been thinking, eating, or sleeping.
  */
-long	get_time(void)
+long long	get_time(void)
 {
 	struct timeval	time;
 
@@ -39,6 +39,53 @@ void	custom_usleep(unsigned int usec)
 	target_time = start_time + (usec / 1000);
 	while (get_time() < target_time)
 		usleep(100);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
+
+	i = 0;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (i < n && str1[i] && str2[i])
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	if (i == n)
+		return (0);
+	return (str1[i] - str2[i]);
+}
+
+void	print_philo(t_table *table, int id, char *msg)
+{
+	long	now;
+
+	now = get_time();
+	// table->sim_end = 0;
+	printf("lock %p\n", &table->lock);
+	pthread_mutex_lock(&table->lock);
+	printf("ici\n");
+	// while (!table->sim_end)
+	// {
+	printf("%s", CYAN);
+	printf("now: %ld\n", now);
+	// printf("table->sim_start: %ld\n", table->sim_start);
+	// printf("%ld", now - table->sim_start);
+	printf("%s", RESET);
+	printf("%s", MAGENTA);
+	printf(" %d ", id);
+	printf("%s", RESET);
+	printf("%s", msg);
+	// if (ft_strncmp(msg, DEAD, 4) == 0)
+	// 	table->sim_end = 1;
+	//}
+	printf("tutto ok\n");
+	pthread_mutex_unlock(&table->lock);
 }
 
 void	ft_error(int code)

@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 13:36:30 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/06 19:04:13 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 void	*philo_life(void *data)
 {
 	t_philo	*philo;
+	t_table	*table;
 
-	// table = (t_table *)philo;
 	philo = data;
-	printf("philo %d is thinking\n", philo->id);
+	table = philo->table;
+	printf("philo %d is alive\n", philo->id);
+	print_philo(table, philo->id, THINK);
 	philo->meals_eaten++;
 	return (NULL);
 }
@@ -30,6 +32,7 @@ int	init_philo_threads(t_table *table)
 	i = 0;
 	while (i < table->input.philo_count)
 	{
+		// printf("ciso\n");
 		table->philo->last_meal = get_time();
 		if (pthread_create(&table->philo[i].philo_thr, NULL, philo_life,
 				&table->philo[i]))

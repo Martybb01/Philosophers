@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 12:45:42 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/06 19:37:17 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ typedef struct s_input
 
 typedef struct s_philo
 {
+	struct s_table	*table;
 	int				id;
 	pthread_t		philo_thr;
 	int				meals_eaten;
 	int				last_meal;
-	uint64_t		time_to_die;
+	int				time_to_die;
 	pthread_mutex_t	lock;
 	int				left_fork;
 	int				right_fork;
@@ -70,6 +71,8 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int				philos;
+	long			sim_start;
+	int				sim_end;
 	t_input			input;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
@@ -84,6 +87,7 @@ typedef struct s_table
 void				ft_error(int code);
 long				get_time(void);
 void				custom_usleep(unsigned int usec);
+void				print_philo(t_table *table, int id, char *msg);
 
 // ---------------INIT---------------
 int					init_input(int ac, char **av, t_table *table);
@@ -95,6 +99,6 @@ int					ft_atoi(char *str);
 int					ft_strlen(char *str);
 void				ft_putstr_fd(char *str, int fd);
 
-// ---------------INIT-----------------
+// ---------------PHILOLIFE-----------------
 
 #endif
