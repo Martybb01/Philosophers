@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/05 15:12:18 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:26:13 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		philo_thr;
 	int				meals_eaten;
-	// bool			is_full;
+	int				last_meal;
 	uint64_t		time_to_die;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*left_fork;
@@ -82,6 +82,8 @@ typedef struct s_table
 
 // ---------------UTILS----------------
 void				ft_error(int code);
+long				get_time(void);
+void				custom_usleep(unsigned int usec);
 
 // ---------------INIT---------------
 int					init_input(int ac, char **av, t_table *table);
