@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 12:26:13 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/06 12:45:42 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_philo
 	int				last_meal;
 	uint64_t		time_to_die;
 	pthread_mutex_t	lock;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	int				left_fork;
+	int				right_fork;
 
 }					t_philo;
 
@@ -88,6 +88,7 @@ void				custom_usleep(unsigned int usec);
 // ---------------INIT---------------
 int					init_input(int ac, char **av, t_table *table);
 int					init_philo(t_table *table);
+int					init_philo_threads(t_table *table);
 
 // ---------------LIBFT----------------
 int					ft_atoi(char *str);
