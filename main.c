@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:28 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/08 11:50:22 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:07:37 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 	if (init_philo(&table))
 		return (1);
 	printf("Philo initialized\n");
-	if (!init_philo_threads(&table))
+	if (init_philo_threads(&table))
 		return (1);
 	printf("Simulation finished\n");
 	return (0);
