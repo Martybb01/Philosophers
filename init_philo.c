@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 19:36:43 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:14:20 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	init_philo(t_table *table)
 	while (i < table->input.philo_count)
 	{
 		table->sim_start = get_time();
-		// printf("sim_start: %ld\n", table->sim_start);
+		table->philo[i].table = table;
+		printf("sim_start: %ld\n", table->sim_start);
 		table->philo[i].id = i + 1;
 		printf("philo %d id: %d\n", i, table->philo[i].id);
 		table->philo[i].meals_eaten = 0;
@@ -63,10 +64,10 @@ int	init_philo(t_table *table)
 		printf("philo %d right fork: %d\n", table->philo[i].id,
 			table->philo[i].right_fork);
 		table->philo[i].time_to_die = table->input.time_to_die;
-		// printf("philo %d time to die: %d\n", table->philo[i].id,
-		// 	table->philo[i].time_to_die);
+		printf("philo %d time to die: %d\n", table->philo[i].id,
+			table->philo[i].time_to_die);
 		table->philo[i].last_meal = get_time();
-		printf("philo %d last meal: %ld\n", table->philo[i].id,
+		printf("philo %d last meal: %d\n", table->philo[i].id,
 			table->philo[i].last_meal);
 		pthread_mutex_init(&table->philo[i].lock, NULL);
 		i++;

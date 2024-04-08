@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:28 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 19:12:28 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:50:22 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int ac, char **av)
 {
 	t_table	table;
 
+	table = (t_table){0};
 	if (init_input(ac, av, &table))
 		return (1);
 	if (init_philo(&table))

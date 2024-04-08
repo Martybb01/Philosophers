@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 19:04:13 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:25:32 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,16 @@ void	*philo_life(void *data)
 	t_philo	*philo;
 	t_table	*table;
 
-	philo = data;
+	philo = (t_philo *)data;
 	table = philo->table;
-	printf("philo %d is alive\n", philo->id);
+	if (philo->id % 2)
+		custom_usleep(1000);
+	else
+		custom_usleep(500);
+	// while (!table->sim_end)
+	// {
+	// }
+	// printf("philo %d is alive\n", philo->id);
 	print_philo(table, philo->id, THINK);
 	philo->meals_eaten++;
 	return (NULL);
