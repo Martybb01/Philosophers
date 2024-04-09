@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/06 19:37:17 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/09 23:55:16 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,8 @@ int					ft_strlen(char *str);
 void				ft_putstr_fd(char *str, int fd);
 
 // ---------------PHILOLIFE-----------------
+void				philo_sleep(t_table *table, t_philo *philo);
+void				philo_eat(t_table *table, t_philo *philo);
+void				philo_think(t_table *table, t_philo *philo);
 
 #endif

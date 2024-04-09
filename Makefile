@@ -10,6 +10,7 @@ init_parse_input.c \
 libft.c \
 init_philo.c \
 init_philo_thr.c \
+philo_actions.c
 
 OBJS_MAIN := $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/08 18:19:55 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/09 23:58:41 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,15 @@ void	*philo_life(void *data)
 	table = philo->table;
 	if (philo->id % 2)
 		custom_usleep(1000);
-	// while (!table->sim_end)
-	// {
-	// }
-	// printf("philo %d is alive\n", philo->id);
-	print_philo(table, philo->id, THINK);
+	while (!table->sim_end)
+	{
+		// philo_eat(table, philo);
+		philo_sleep(table, philo);
+		philo_think(table, philo);
+	}
 	philo->meals_eaten++;
 	philo->meals_eaten++;
-	return (NULL);
+	return (data);
 }
 
 int	sim_finish_die(t_table *table, t_philo *philo)
@@ -44,8 +45,8 @@ int	sim_finish_die(t_table *table, t_philo *philo)
 	}
 	if (get_time() - philo->last_meal > table->input.time_to_die)
 	{
-		table->sim_end = true;
 		print_philo(table, philo->id, DEAD);
+		table->sim_end = true;
 		return (0);
 	}
 	return (1);
@@ -65,16 +66,16 @@ int	init_philo_threads(t_table *table)
 		i++;
 	}
 	if (!sim_finish_die(table, table->philo))
-		printf("eat or die\n");
+		return (1);
 	i = 0;
 	while (i < table->input.philo_count)
 	{
 		if (pthread_join(table->philo[i].philo_thr, NULL))
 			ft_error(5);
-		printf("Philo thread %d joined\n", i);
+		// printf("Philo thread %d joined\n", i);
 		i++;
 	}
-	printf("meals eaten: %d\n", table->philo->meals_eaten);
+	// printf("meals eaten: %d\n", table->philo->meals_eaten);
 	// free all threads
 	return (0);
 }
