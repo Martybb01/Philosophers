@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/09 23:58:41 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/10 10:33:17 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,40 @@ void	*philo_life(void *data)
 	philo = (t_philo *)data;
 	table = philo->table;
 	if (philo->id % 2)
-		custom_usleep(1000);
+		custom_usleep(100);
 	while (!table->sim_end)
 	{
-		// philo_eat(table, philo);
+		philo_eat(table, philo);
 		philo_sleep(table, philo);
 		philo_think(table, philo);
 	}
-	philo->meals_eaten++;
-	philo->meals_eaten++;
-	return (data);
+	return ((void *)0);
 }
 
-int	sim_finish_die(t_table *table, t_philo *philo)
+void	sim_finish_die(t_table *table, t_philo *philo)
 {
-	// printf("sim_end: %d\n", table->sim_end);
-	if (table->input.meals_count != -1
-		&& philo->meals_eaten == table->input.meals_count)
+	// int	i;
+	while (!table->sim_end)
 	{
-		// printf("MANGIATO %d\n", philo->meals_eaten);
-		print_philo(table, philo->id, EAT);
-		table->sim_end = true;
-		return (0);
+		// printf("sim_end: %d\n", table->sim_end);
+		if (table->input.meals_count != -1
+			&& philo->meals_eaten == table->input.meals_count)
+		{
+			table->sim_end = true;
+			break ;
+		}
+		// i = 0;
+		// while (i < table->input.philo_count)
+		// {
+		// 	if (get_time() - philo[i].last_meal > table->input.time_to_die)
+		// 	{
+		// 		print_philo(table, philo[i].id, DEAD);
+		// 		table->sim_end = true;
+		// 		break ;
+		// 	}
+		// 	i++;
+		// }
 	}
-	if (get_time() - philo->last_meal > table->input.time_to_die)
-	{
-		print_philo(table, philo->id, DEAD);
-		table->sim_end = true;
-		return (0);
-	}
-	return (1);
 }
 
 int	init_philo_threads(t_table *table)
@@ -65,8 +69,7 @@ int	init_philo_threads(t_table *table)
 			ft_error(5);
 		i++;
 	}
-	if (!sim_finish_die(table, table->philo))
-		return (1);
+	sim_finish_die(table, table->philo);
 	i = 0;
 	while (i < table->input.philo_count)
 	{
