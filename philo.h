@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/09 23:55:16 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:50:05 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_table
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	stampa;
 	pthread_t		monitor_thr;
 	// int				meals;
 	// pthread_mutex_t	print_lock;

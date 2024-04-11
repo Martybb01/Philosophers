@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/08 17:45:06 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:50:17 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	custom_usleep(unsigned int usec)
 	start_time = get_time();
 	target_time = start_time + (usec / 1000);
 	while (get_time() < target_time)
-		usleep(100);
+		usleep(50);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -66,7 +66,7 @@ void	print_philo(t_table *table, int id, char *msg)
 	long	now;
 
 	now = get_time();
-	pthread_mutex_lock(&table->lock);
+	pthread_mutex_lock(&table->stampa);
 	if (!(table->sim_end))
 	{
 		printf("%s", CYAN);
@@ -77,7 +77,7 @@ void	print_philo(t_table *table, int id, char *msg)
 		printf("%s", RESET);
 		printf("%s", msg);
 	}
-	pthread_mutex_unlock(&table->lock);
+	pthread_mutex_unlock(&table->stampa);
 }
 
 void	ft_error(int code)

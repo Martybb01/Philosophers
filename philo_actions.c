@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 23:54:25 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/10 10:26:44 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:48:11 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 void	philo_sleep(t_table *table, t_philo *philo)
 {
+	// pthread_mutex_lock(&philo->lock);
 	print_philo(table, philo->id, SLEEP);
+	// pthread_mutex_unlock(&philo->lock);
 	custom_usleep(table->input.time_to_sleep);
 }
 
 void	philo_think(t_table *table, t_philo *philo)
 {
+	// pthread_mutex_lock(&philo->lock);
 	print_philo(table, philo->id, THINK);
+	// pthread_mutex_unlock(&philo->lock);
 }
 
 void	philo_eat(t_table *table, t_philo *philo)
@@ -30,8 +34,10 @@ void	philo_eat(t_table *table, t_philo *philo)
 	pthread_mutex_lock(&table->forks[philo->right_fork]);
 	print_philo(table, philo->id, FORK);
 	print_philo(table, philo->id, EAT);
+	pthread_mutex_lock(&philo->lock);
 	philo->last_meal = get_time();
 	philo->meals_eaten += 1;
+	pthread_mutex_unlock(&philo->lock);
 	custom_usleep(table->input.time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->right_fork]);
 	pthread_mutex_unlock(&table->forks[philo->left_fork]);

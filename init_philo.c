@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/09 22:11:25 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:17:14 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	init_forks(t_table *table)
 	i = 0;
 	if (pthread_mutex_init(&table->lock, NULL))
 		ft_error(5);
+	if (pthread_mutex_init(&table->stampa, NULL))
+		ft_error(5);
 	while (i < table->input.philo_count)
 	{
 		pthread_mutex_init(&table->forks[i], NULL);
@@ -57,12 +59,25 @@ int	init_philo(t_table *table)
 		table->philo[i].id = i + 1;
 		// printf("philo %d id: %d\n", i, table->philo[i].id);
 		table->philo[i].meals_eaten = 0;
-		table->philo[i].left_fork = i;
-		// printf("philo %d left fork: %d\n", table->philo[i].id,
-		// table->philo[i].left_fork);
-		table->philo[i].right_fork = (i + 1) % table->input.philo_count;
-		// printf("philo %d right fork: %d\n", table->philo[i].id,
-		// table->philo[i].right_fork);
+		if (i == 0)
+		{
+			table->philo[i].left_fork = 0;
+			table->philo[i].right_fork = table->input.philo_count - 1;
+		}
+		else if (i == table->input.philo_count - 1)
+		{
+			table->philo[i].left_fork = table->input.philo_count - 2;
+			table->philo[i].right_fork = table->input.philo_count - 1;
+		}
+		else
+		{
+			table->philo[i].right_fork = table->philo[i].id - 2;
+			table->philo[i].left_fork = table->philo[i].id - 1;
+		}
+		printf("philo %d left fork: %d\n", table->philo[i].id,
+			table->philo[i].left_fork);
+		printf("philo %d right fork: %d\n", table->philo[i].id,
+			table->philo[i].right_fork);
 		table->philo[i].time_to_die = table->input.time_to_die;
 		// printf("philo %d time to die: %d\n", table->philo[i].id,
 		// table->philo[i].time_to_die);
