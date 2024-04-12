@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 10:15:26 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 12:57:43 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ long	get_time(void)
  * @brief Sleep for a given amount of time in microseconds.
  * @param usec The amount of time to sleep in microseconds.
  */
-void	custom_usleep(unsigned int usec)
+void	custom_usleep(unsigned int milli)
 {
 	long	start_time;
 	long	target_time;
 
 	start_time = get_time();
-	target_time = start_time + (usec / 1000);
+	target_time = start_time + (milli);
 	while (get_time() < target_time)
 		usleep(100);
 }
@@ -65,6 +65,8 @@ void	print_philo(t_table *table, int id, char *msg)
 {
 	long	now;
 
+	(void)id;
+	(void)msg;
 	now = get_time();
 	pthread_mutex_lock(&table->print_lock);
 	if (!(table->sim_end))

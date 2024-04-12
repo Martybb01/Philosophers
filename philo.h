@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 10:10:57 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:01:13 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define THINK "is thinking 💭\n"
 # define FORK "has taken a fork 🍴\n"
 # define DEAD "died 💀"
+# define MEALS "has eaten enough meals 🍽️\n"
 
 # define WRONG_ARG_NUM "Error: wrong number of arguments ❌\n"
 # define INVALID_PHILO "Error: Invalid philo input 🧐\n"

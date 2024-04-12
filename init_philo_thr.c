@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 10:58:08 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:02:51 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ void	*philo_life(void *data)
 	while (!table->sim_end)
 	{
 		philo_eat(table, philo);
+		if (table->input.meals_count != -1)
+		{
+			pthread_mutex_lock(&philo->philo_lock);
+			philo->meals_eaten += 1;
+			if (philo->meals_eaten == table->input.meals_count)
+			{
+				pthread_mutex_unlock(&philo->philo_lock);
+				print_philo(table, philo->id, MEALS);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->philo_lock);
+		}
 		philo_sleep(table, philo);
 		philo_think(table, philo);
 	}
