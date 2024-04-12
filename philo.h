@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 13:01:13 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:02:28 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define SLEEP "is sleeping 💤\n"
 # define THINK "is thinking 💭\n"
 # define FORK "has taken a fork 🍴\n"
+# define FORK_DOWN "has put down a fork 🍴\n"
 # define DEAD "died 💀"
 # define MEALS "has eaten enough meals 🍽️\n"
 
@@ -61,7 +62,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		philo_thr;
 	int				meals_eaten;
-	int				last_meal;
+	unsigned long	last_meal;
 	int				time_to_die;
 	pthread_mutex_t	philo_lock;
 	int				left_fork;
@@ -77,10 +78,9 @@ typedef struct s_table
 	t_input			input;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	dead_lock;
+	pthread_mutex_t	end_lock;
 	pthread_mutex_t	print_lock;
 	pthread_t		monitor_thr;
-	// int				meals;
 
 }					t_table;
 
@@ -104,5 +104,6 @@ void				ft_putstr_fd(char *str, int fd);
 void				philo_sleep(t_table *table, t_philo *philo);
 void				philo_eat(t_table *table, t_philo *philo);
 void				philo_think(t_table *table, t_philo *philo);
+int					is_ended(t_table *table);
 
 #endif

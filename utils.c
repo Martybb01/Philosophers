@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 12:57:43 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:46:05 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ void	print_philo(t_table *table, int id, char *msg)
 {
 	long	now;
 
-	(void)id;
-	(void)msg;
 	now = get_time();
 	pthread_mutex_lock(&table->print_lock);
-	if (!(table->sim_end))
+	if (!is_ended(table))
 	{
 		printf("%s", CYAN);
 		printf("%ld", now - table->sim_start);

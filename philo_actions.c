@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 23:54:25 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 13:01:21 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 13:57:15 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	philo_sleep(t_table *table, t_philo *philo)
 
 void	philo_think(t_table *table, t_philo *philo)
 {
-	// pthread_mutex_lock(&philo->lock);
+	// pthread_mutex_lock(&philo->philo_lock);
 	print_philo(table, philo->id, THINK);
-	// pthread_mutex_unlock(&philo->lock);
+	// pthread_mutex_unlock(&philo->philo_lock);
 }
 
 void	philo_eat(t_table *table, t_philo *philo)
@@ -39,5 +39,7 @@ void	philo_eat(t_table *table, t_philo *philo)
 	pthread_mutex_unlock(&philo->philo_lock);
 	custom_usleep(table->input.time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->left_fork]);
+	print_philo(table, philo->id, FORK_DOWN);
 	pthread_mutex_unlock(&table->forks[philo->right_fork]);
+	print_philo(table, philo->id, FORK_DOWN);
 }

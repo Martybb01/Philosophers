@@ -6,11 +6,21 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 13:02:51 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:04:47 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	is_ended(t_table *table)
+{
+	int	res;
+
+	pthread_mutex_lock(&table->end_lock);
+	res = table->sim_end;
+	pthread_mutex_unlock(&table->end_lock);
+	return (res);
+}
 
 void	*philo_life(void *data)
 {
@@ -19,7 +29,12 @@ void	*philo_life(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	while (!table->sim_end)
+	if (philo->id % 2 == 0)
+		custom_usleep(1);
+	pthread_mutex_lock(&philo->philo_lock);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->philo_lock);
+	while (!is_ended(table))
 	{
 		philo_eat(table, philo);
 		if (table->input.meals_count != -1)
@@ -40,40 +55,44 @@ void	*philo_life(void *data)
 	return ((void *)0);
 }
 
-// void	sim_finish_die(t_table *table, t_philo *philo)
-// {
-// 	int	i;
+void	sim_finish_die(t_table *table)
+{
+	int		i;
+	int		is_full;
+	t_philo	*philo;
 
-// 	// pthread_mutex_lock(&table->lock);
-// 	while (!table->sim_end)
-// 	{
-// 		pthread_mutex_lock(&table->lock);
-// 		// printf("sim_end: %d\n", table->sim_end);
-// 		if (table->input.meals_count != -1
-// 			&& philo->meals_eaten == table->input.meals_count)
-// 		{
-// 			table->sim_end = true;
-// 			break ;
-// 		}
-// 		pthread_mutex_unlock(&table->lock);
-// 		i = 0;
-// 		while (i < table->input.philo_count)
-// 		{
-// 			pthread_mutex_lock(&philo[i].lock);
-// 			if (get_time() - philo[i].last_meal >= table->input.time_to_die)
-// 			{
-// 				print_philo(table, philo[i].id, DEAD);
-// 				pthread_mutex_lock(&table->lock);
-// 				table->sim_end = true;
-// 				pthread_mutex_unlock(&table->lock);
-// 				break ;
-// 			}
-// 			pthread_mutex_unlock(&philo[i].lock);
-// 			i++;
-// 		}
-// 	}
-// 	// pthread_mutex_unlock(&table->lock);
-// }
+	is_full = 0;
+	while (is_full != table->input.philo_count && !is_ended(table))
+	{
+		i = -1;
+		is_full = 0;
+		while (++i < table->input.philo_count)
+		{
+			philo = &table->philo[i];
+			pthread_mutex_lock(&philo->philo_lock);
+			if (table->input.meals_count != -1
+				&& philo->meals_eaten == table->input.meals_count)
+			{
+				is_full++;
+				pthread_mutex_unlock(&philo->philo_lock);
+				continue ;
+			}
+			// pthread_mutex_unlock(&philo->philo_lock);
+			// pthread_mutex_lock(&philo->philo_lock);
+			if (philo->last_meal != 0 && (get_time()
+					- philo->last_meal > (uint64_t)table->input.time_to_die))
+			{
+				print_philo(table, philo->id, DEAD);
+				pthread_mutex_unlock(&philo->philo_lock);
+				pthread_mutex_lock(&table->end_lock);
+				table->sim_end = 1;
+				pthread_mutex_unlock(&table->end_lock);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->philo_lock);
+		}
+	}
+}
 
 void	destroy_mutex(t_table *table)
 {
@@ -86,7 +105,7 @@ void	destroy_mutex(t_table *table)
 		pthread_mutex_destroy(&table->forks[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&table->dead_lock);
+	pthread_mutex_destroy(&table->end_lock);
 	pthread_mutex_destroy(&table->print_lock);
 }
 
@@ -97,13 +116,13 @@ int	init_philo_threads(t_table *table)
 	i = 0;
 	while (i < table->input.philo_count)
 	{
-		table->philo[i].last_meal = get_time();
+		table->philo[i].last_meal = 0;
 		if (pthread_create(&table->philo[i].philo_thr, NULL, philo_life,
 				&table->philo[i]))
 			ft_error(5);
 		i++;
 	}
-	// sim_finish_die(table, table->philo);
+	sim_finish_die(table);
 	i = 0;
 	while (i < table->input.philo_count)
 	{
