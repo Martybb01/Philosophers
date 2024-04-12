@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 23:54:25 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/11 12:48:11 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:17:01 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	philo_eat(t_table *table, t_philo *philo)
 	pthread_mutex_lock(&table->forks[philo->right_fork]);
 	print_philo(table, philo->id, FORK);
 	print_philo(table, philo->id, EAT);
-	pthread_mutex_lock(&philo->lock);
+	pthread_mutex_lock(&philo->philo_lock);
 	philo->last_meal = get_time();
 	philo->meals_eaten += 1;
-	pthread_mutex_unlock(&philo->lock);
+	pthread_mutex_unlock(&philo->philo_lock);
 	custom_usleep(table->input.time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->right_fork]);
 	pthread_mutex_unlock(&table->forks[philo->left_fork]);

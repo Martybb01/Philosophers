@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/10 16:50:05 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:10:57 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_philo
 	int				meals_eaten;
 	int				last_meal;
 	int				time_to_die;
-	pthread_mutex_t	lock;
+	pthread_mutex_t	philo_lock;
 	int				left_fork;
 	int				right_fork;
 
@@ -76,11 +76,10 @@ typedef struct s_table
 	t_input			input;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	lock;
-	pthread_mutex_t	stampa;
+	pthread_mutex_t	dead_lock;
+	pthread_mutex_t	print_lock;
 	pthread_t		monitor_thr;
 	// int				meals;
-	// pthread_mutex_t	print_lock;
 
 }					t_table;
 
