@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 13:46:05 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 21:31:36 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,6 @@ void	print_philo(t_table *table, int id, char *msg)
 
 void	ft_error(int code)
 {
-	if (code == 1)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: wrong number of arguments\n", 2);
-	}
-	if (code == 2)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid philo input\n", 2);
-	}
-	if (code == 3)
-	{
-		write(2, RED, ft_strlen(RED));
-		ft_putstr_fd("Error: Invalid time ⏰\n", 2);
-	}
 	if (code == 4)
 	{
 		write(2, RED, ft_strlen(RED));

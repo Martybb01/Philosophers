@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 13:19:31 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/12 21:35:56 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,35 @@ void	init_mutex(t_table *table, t_philo *philo)
 	}
 }
 
+void	assign_forks(t_table *table, int i)
+{
+	if (i == 0)
+	{
+		table->philo[i].left_fork = 0;
+		table->philo[i].right_fork = table->input.philo_count - 1;
+	}
+	else if (i == table->input.philo_count - 1)
+	{
+		table->philo[i].left_fork = table->input.philo_count - 2;
+		table->philo[i].right_fork = table->input.philo_count - 1;
+	}
+	else
+	{
+		table->philo[i].right_fork = table->philo[i].id - 2;
+		table->philo[i].left_fork = table->philo[i].id - 1;
+	}
+	// printf("philo %d left fork: %d\n", table->philo[i].id,
+	// 	table->philo[i].left_fork);
+	// printf("philo %d right fork: %d\n", table->philo[i].id,
+	// 	table->philo[i].right_fork);
+}
+
 int	init_philo(t_table *table)
 {
 	int	i;
 
 	init_malloc(table);
-	// printf("table->input.philo_count: %d\n", table->input.philo_count);
 	init_mutex(table, table->philo);
-	// printf("forks initialized\n");
 	i = 0;
 	while (i < table->input.philo_count)
 	{
@@ -62,25 +83,7 @@ int	init_philo(t_table *table)
 		table->philo[i].id = i + 1;
 		// printf("philo %d id: %d\n", i, table->philo[i].id);
 		table->philo[i].meals_eaten = 0;
-		if (i == 0)
-		{
-			table->philo[i].left_fork = 0;
-			table->philo[i].right_fork = table->input.philo_count - 1;
-		}
-		else if (i == table->input.philo_count - 1)
-		{
-			table->philo[i].left_fork = table->input.philo_count - 2;
-			table->philo[i].right_fork = table->input.philo_count - 1;
-		}
-		else
-		{
-			table->philo[i].right_fork = table->philo[i].id - 2;
-			table->philo[i].left_fork = table->philo[i].id - 1;
-		}
-		// printf("philo %d left fork: %d\n", table->philo[i].id,
-		// 	table->philo[i].left_fork);
-		// printf("philo %d right fork: %d\n", table->philo[i].id,
-		// 	table->philo[i].right_fork);
+		assign_forks(table, i);
 		table->philo[i].time_to_die = table->input.time_to_die;
 		// printf("philo %d time to die: %d\n", table->philo[i].id,
 		// table->philo[i].time_to_die);
@@ -89,6 +92,5 @@ int	init_philo(t_table *table)
 		// table->philo[i].last_meal);
 		i++;
 	}
-	// printf("philo initialized\n");
 	return (0);
 }
