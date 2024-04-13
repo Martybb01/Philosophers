@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 21:53:07 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/13 20:54:08 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ void	philo_routine(t_table *table, t_philo *philo)
 			}
 			pthread_mutex_unlock(&philo->philo_lock);
 		}
-		philo_sleep(table, philo);
-		philo_think(table, philo);
+		if (table->input.philo_count > 1)
+		{
+			philo_sleep(table, philo);
+			philo_think(table, philo);
+		}
+		else
+			break ;
 	}
 }
 
