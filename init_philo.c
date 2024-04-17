@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 21:35:56 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:05:31 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	init_philo(t_table *table)
 		table->philo[i].time_to_die = table->input.time_to_die;
 		// printf("philo %d time to die: %d\n", table->philo[i].id,
 		// table->philo[i].time_to_die);
-		table->philo[i].last_meal = get_time();
+		table->philo[i].last_meal = 0;
 		// printf("philo %d last meal: %d\n", table->philo[i].id,
 		// table->philo[i].last_meal);
 		i++;

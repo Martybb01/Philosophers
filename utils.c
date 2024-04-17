@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 21:31:36 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:04:03 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,55 @@ long	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
+long	timestamp(t_table *table)
+{
+	return (get_time() - table->sim_start);
+}
+
 /**
  * @brief Sleep for a given amount of time in microseconds.
  * @param usec The amount of time to sleep in microseconds.
  */
-void	custom_usleep(unsigned int milli)
+// void	custom_usleep(unsigned int milli)
+// {
+// 	long	start_time;
+// 	long	target_time;
+
+// 	start_time = get_time();
+// 	target_time = start_time + (milli);
+// 	while (get_time() < target_time)
+// 		usleep(100);
+// }
+
+void	custom_usleep(unsigned long milli)
 {
-	long	start_time;
-	long	target_time;
+	long			start_time;
+	unsigned long	diff;
 
 	start_time = get_time();
-	target_time = start_time + (milli);
-	while (get_time() < target_time)
-		usleep(100);
+	while (1)
+	{
+		diff = get_time() - start_time;
+		if (diff >= milli)
+			break ;
+		usleep(10);
+	}
 }
+
+// void	custom_usleep(t_table *table, unsigned int milli)
+// {
+// 	long	start_time;
+// 	long	diff;
+
+// 	start_time = timestamp(table);
+// 	while (1)
+// 	{
+// 		diff = timestamp(table) - start_time;
+// 		if (diff >= milli)
+// 			break ;
+// 		usleep(100);
+// 	}
+// }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

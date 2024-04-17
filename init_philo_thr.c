@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/13 20:54:08 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:13:53 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	*philo_life(void *data)
 	philo = (t_philo *)data;
 	table = philo->table;
 	if (philo->id % 2 == 0)
-		custom_usleep(1);
-	pthread_mutex_lock(&philo->philo_lock);
-	philo->last_meal = get_time();
-	pthread_mutex_unlock(&philo->philo_lock);
+		usleep(1000);
+	// pthread_mutex_lock(&philo->philo_lock);
+	// philo->last_meal = get_time();
+	// pthread_mutex_unlock(&philo->philo_lock);
 	philo_routine(table, philo);
 	return ((void *)0);
 }
@@ -121,6 +121,7 @@ void	check_philo_health(t_table *table)
 			}
 			// pthread_mutex_unlock(&philo->philo_lock);
 			// pthread_mutex_lock(&philo->philo_lock);
+			// custom_usleep(1);
 			if (philo->last_meal != 0 && (get_time()
 					- philo->last_meal > (uint64_t)table->input.time_to_die))
 			{
@@ -149,6 +150,8 @@ void	destroy_mutex(t_table *table)
 	}
 	pthread_mutex_destroy(&table->end_lock);
 	pthread_mutex_destroy(&table->print_lock);
+	free(table->forks);
+	free(table->philo);
 }
 
 int	init_philo_threads(t_table *table)

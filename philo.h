@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/13 20:56:02 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:04:19 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int				philos;
-	long			sim_start;
+	unsigned long	sim_start;
 	int				sim_end;
 	t_input			input;
 	t_philo			*philo;
@@ -87,7 +87,8 @@ typedef struct s_table
 // ---------------UTILS----------------
 void				ft_error(int code);
 long				get_time(void);
-void				custom_usleep(unsigned int usec);
+long				timestamp(t_table *table);
+void				custom_usleep(unsigned long usec);
 void				print_philo(t_table *table, int id, char *msg);
 
 // ---------------INIT---------------
