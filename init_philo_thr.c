@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/17 11:13:53 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:06:03 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	philo_routine(t_table *table, t_philo *philo)
 	while (!is_ended(table))
 	{
 		philo_eat(table, philo);
+		if (table->input.philo_count == 1)
+			break ;
 		if (table->input.meals_count != -1)
 		{
 			pthread_mutex_lock(&philo->philo_lock);
@@ -39,13 +41,8 @@ void	philo_routine(t_table *table, t_philo *philo)
 			}
 			pthread_mutex_unlock(&philo->philo_lock);
 		}
-		if (table->input.philo_count > 1)
-		{
-			philo_sleep(table, philo);
-			philo_think(table, philo);
-		}
-		else
-			break ;
+		philo_sleep(table, philo);
+		philo_think(table, philo);
 	}
 }
 
@@ -57,10 +54,10 @@ void	*philo_life(void *data)
 	philo = (t_philo *)data;
 	table = philo->table;
 	if (philo->id % 2 == 0)
-		usleep(1000);
-	// pthread_mutex_lock(&philo->philo_lock);
-	// philo->last_meal = get_time();
-	// pthread_mutex_unlock(&philo->philo_lock);
+		custom_usleep(1);
+	pthread_mutex_lock(&philo->philo_lock);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->philo_lock);
 	philo_routine(table, philo);
 	return ((void *)0);
 }
@@ -123,7 +120,7 @@ void	check_philo_health(t_table *table)
 			// pthread_mutex_lock(&philo->philo_lock);
 			// custom_usleep(1);
 			if (philo->last_meal != 0 && (get_time()
-					- philo->last_meal > (uint64_t)table->input.time_to_die))
+					- philo->last_meal >= (uint64_t)table->input.time_to_die))
 			{
 				print_philo(table, philo->id, DEAD);
 				pthread_mutex_unlock(&philo->philo_lock);

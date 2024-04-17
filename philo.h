@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/17 10:04:19 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:08:36 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ typedef struct s_table
 
 // ---------------UTILS----------------
 void				ft_error(int code);
-long				get_time(void);
+unsigned long		get_time(void);
 long				timestamp(t_table *table);
-void				custom_usleep(unsigned long usec);
+void				custom_usleep(long sec);
 void				print_philo(t_table *table, int id, char *msg);
 
 // ---------------INIT---------------
