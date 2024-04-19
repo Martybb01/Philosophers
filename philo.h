@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/17 12:08:36 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:08:58 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@
 # define MAGENTA "\033[1;35m" // philo died
 # define CYAN "\033[1;36m"    // philo sleeping
 
-# define EAT "is eating 🍝\n"
-# define SLEEP "is sleeping 💤\n"
-# define THINK "is thinking 💭\n"
-# define FORK "has taken a fork 🍴\n"
-# define FORK_DOWN "has put down a fork 🍴\n"
-# define DEAD "died 💀\n"
-# define MEALS "has eaten enough meals 🍽️\n"
+# define EAT "is eating \n"
+# define SLEEP "is sleeping \n"
+# define THINK "is thinking \n"
+# define FORK "has taken a fork \n"
+# define FORK_DOWN "has put down a fork \n"
+# define DEAD "died \n"
+# define MEALS "has eaten enough meals \n"
 
 # define WRONG_ARG_NUM "Error: wrong number of arguments ❌\n"
 # define INVALID_PHILO "Error: Invalid philo input 🧐\n"
@@ -88,7 +88,7 @@ typedef struct s_table
 void				ft_error(int code);
 unsigned long		get_time(void);
 long				timestamp(t_table *table);
-void				custom_usleep(long sec);
+void				custom_usleep(unsigned long sec);
 void				print_philo(t_table *table, int id, char *msg);
 
 // ---------------INIT---------------

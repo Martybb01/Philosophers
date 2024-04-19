@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/17 10:05:31 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:46:58 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,25 @@ void	init_malloc(t_table *table)
 {
 	table->philo = malloc(sizeof(t_philo) * table->input.philo_count);
 	if (!table->philo)
+	{
+		free(table);
 		ft_error(4);
+	}
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->input.philo_count);
 	if (!table->forks)
+	{
+		free(table->philo);
+		free(table);
 		ft_error(4);
+	}
 	table->philo->philo_thr = (pthread_t)malloc(sizeof(pthread_t)
 			* table->input.philo_count);
 	if (!table->philo->philo_thr)
+	{
+		free(table->philo);
+		free(table);
 		ft_error(4);
+	}
 }
 
 void	init_mutex(t_table *table, t_philo *philo)
@@ -77,7 +88,7 @@ int	init_philo(t_table *table)
 	i = 0;
 	while (i < table->input.philo_count)
 	{
-		table->sim_start = get_time();
+		// table->sim_start = get_time();
 		table->philo[i].table = table;
 		// printf("sim_start: %ld\n", table->sim_start);
 		table->philo[i].id = i + 1;

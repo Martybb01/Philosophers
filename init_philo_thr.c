@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/17 12:06:03 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:47:10 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	*philo_life(void *data)
 	table = philo->table;
 	if (philo->id % 2 == 0)
 		custom_usleep(1);
+	// else if (philo->id == table->input.philo_count - 1)
+	// 	usleep(500);
 	pthread_mutex_lock(&philo->philo_lock);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->philo_lock);
@@ -120,7 +122,7 @@ void	check_philo_health(t_table *table)
 			// pthread_mutex_lock(&philo->philo_lock);
 			// custom_usleep(1);
 			if (philo->last_meal != 0 && (get_time()
-					- philo->last_meal >= (uint64_t)table->input.time_to_die))
+					- philo->last_meal > (uint64_t)table->input.time_to_die))
 			{
 				print_philo(table, philo->id, DEAD);
 				pthread_mutex_unlock(&philo->philo_lock);
@@ -130,6 +132,7 @@ void	check_philo_health(t_table *table)
 				break ;
 			}
 			pthread_mutex_unlock(&philo->philo_lock);
+			/// usleep(10);
 		}
 	}
 }
@@ -156,6 +159,7 @@ int	init_philo_threads(t_table *table)
 	int	i;
 
 	i = 0;
+	table->sim_start = get_time();
 	while (i < table->input.philo_count)
 	{
 		table->philo[i].last_meal = 0;

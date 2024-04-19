@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/17 12:08:50 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:45:44 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ long	timestamp(t_table *table)
  * @brief Sleep for a given amount of time in microseconds.
  * @param usec The amount of time to sleep in microseconds.
  */
-void	custom_usleep(long milli)
+void	custom_usleep(unsigned long milli)
 {
 	unsigned long	start_time;
 	unsigned long	target_time;
