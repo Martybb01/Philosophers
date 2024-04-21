@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/19 17:46:58 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:25:48 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ void	assign_forks(t_table *table, int i)
 		table->philo[i].right_fork = table->philo[i].id - 2;
 		table->philo[i].left_fork = table->philo[i].id - 1;
 	}
-	// printf("philo %d left fork: %d\n", table->philo[i].id,
-	// 	table->philo[i].left_fork);
-	// printf("philo %d right fork: %d\n", table->philo[i].id,
-	// 	table->philo[i].right_fork);
 }
 
 int	init_philo(t_table *table)
@@ -88,19 +84,12 @@ int	init_philo(t_table *table)
 	i = 0;
 	while (i < table->input.philo_count)
 	{
-		// table->sim_start = get_time();
 		table->philo[i].table = table;
-		// printf("sim_start: %ld\n", table->sim_start);
 		table->philo[i].id = i + 1;
-		// printf("philo %d id: %d\n", i, table->philo[i].id);
 		table->philo[i].meals_eaten = 0;
 		assign_forks(table, i);
 		table->philo[i].time_to_die = table->input.time_to_die;
-		// printf("philo %d time to die: %d\n", table->philo[i].id,
-		// table->philo[i].time_to_die);
 		table->philo[i].last_meal = 0;
-		// printf("philo %d last meal: %d\n", table->philo[i].id,
-		// table->philo[i].last_meal);
 		i++;
 	}
 	return (0);

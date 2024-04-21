@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/19 17:47:10 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:24:44 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	*philo_life(void *data)
 // 	}
 // }
 
+// TODO: splitta la funzione in due parti
 void	check_philo_health(t_table *table)
 {
 	int		i;
@@ -106,7 +107,6 @@ void	check_philo_health(t_table *table)
 	{
 		i = -1;
 		is_full = 0;
-		// sim_finish_die(table, philo, i);
 		while (++i < table->input.philo_count)
 		{
 			philo = &table->philo[i];
@@ -118,9 +118,6 @@ void	check_philo_health(t_table *table)
 				pthread_mutex_unlock(&philo->philo_lock);
 				continue ;
 			}
-			// pthread_mutex_unlock(&philo->philo_lock);
-			// pthread_mutex_lock(&philo->philo_lock);
-			// custom_usleep(1);
 			if (philo->last_meal != 0 && (get_time()
 					- philo->last_meal > (uint64_t)table->input.time_to_die))
 			{
@@ -132,7 +129,6 @@ void	check_philo_health(t_table *table)
 				break ;
 			}
 			pthread_mutex_unlock(&philo->philo_lock);
-			/// usleep(10);
 		}
 	}
 }

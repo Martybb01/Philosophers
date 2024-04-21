@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/19 17:45:44 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:26:19 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,6 @@ void	custom_usleep(unsigned long milli)
 	while (get_time() < target_time)
 		usleep(100);
 }
-
-// void	custom_usleep(unsigned long milli)
-// {
-// 	long			start_time;
-// 	unsigned long	diff;
-
-// 	start_time = get_time();
-// 	while (1)
-// 	{
-// 		diff = get_time() - start_time;
-// 		if (diff >= milli)
-// 			break ;
-// 		usleep(10);
-// 	}
-// }
-
-// void	custom_usleep(t_table *table, unsigned int milli)
-// {
-// 	long	start_time;
-// 	long	diff;
-
-// 	start_time = timestamp(table);
-// 	while (1)
-// 	{
-// 		diff = timestamp(table) - start_time;
-// 		if (diff >= milli)
-// 			break ;
-// 		usleep(100);
-// 	}
-// }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

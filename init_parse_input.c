@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:35:49 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/12 13:44:21 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/21 19:27:09 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,5 @@ int	init_input(int ac, char **av, t_table *table)
 		return (printf(RED INVALID_MEALS RESET), 1);
 	if (init_input_struct(ac, av, table) == 1)
 		return (1);
-	// printf("philo_count: %d\n", table->input.philo_count);
-	// printf("time_to_die: %d\n", table->input.time_to_die);
-	// printf("time_to_eat: %d\n", table->input.time_to_eat);
-	// printf("time_to_sleep: %d\n", table->input.time_to_sleep);
-	// printf("meals: %d\n", table->input.meals_count);
 	return (0);
 }
