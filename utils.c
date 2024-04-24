@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/21 19:26:19 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:28:34 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ void	print_philo(t_table *table, int id, char *msg)
 	if (!is_ended(table))
 	{
 		printf("%s", CYAN);
-		printf("%ld", now - table->sim_start);
+		printf("%ld ", now - table->sim_start);
 		printf("%s", RESET);
 		printf("%s", MAGENTA);
-		printf(" %d ", id);
+		printf("%d ", id);
 		printf("%s", RESET);
 		printf("%s", msg);
 	}

@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/19 17:08:58 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:20:45 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@
 # define MAGENTA "\033[1;35m" // philo died
 # define CYAN "\033[1;36m"    // philo sleeping
 
-# define EAT "is eating \n"
-# define SLEEP "is sleeping \n"
-# define THINK "is thinking \n"
-# define FORK "has taken a fork \n"
-# define FORK_DOWN "has put down a fork \n"
-# define DEAD "died \n"
-# define MEALS "has eaten enough meals \n"
+# define EAT "is eating\n"
+# define SLEEP "is sleeping\n"
+# define THINK "is thinking\n"
+# define FORK "has taken a fork\n"
+# define FORK_DOWN "has put down a fork\n"
+# define DEAD "died\n"
+# define MEALS "has eaten enough meals\n"
 
 # define WRONG_ARG_NUM "Error: wrong number of arguments ❌\n"
 # define INVALID_PHILO "Error: Invalid philo input 🧐\n"
@@ -106,5 +106,12 @@ void				philo_sleep(t_table *table, t_philo *philo);
 void				philo_eat(t_table *table, t_philo *philo);
 void				philo_think(t_table *table, t_philo *philo);
 int					is_ended(t_table *table);
+
+// ---------------GETTERS/SETTERS-----------------
+int mutex_getint(pthread_mutex_t *mutex, int *value);
+uint64_t mutex_getuint64(pthread_mutex_t *mutex, uint64_t *value);
+void mutex_setint(pthread_mutex_t *mutex, int *value, int new_value);
+void mutex_setuint64(pthread_mutex_t *mutex, uint64_t *value, uint64_t new_value);
+int mutex_intincr(pthread_mutex_t *mutex, int *value);
 
 #endif
