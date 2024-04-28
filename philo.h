@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/24 13:20:45 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:44:34 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@
 # define MAGENTA "\033[1;35m" // philo died
 # define CYAN "\033[1;36m"    // philo sleeping
 
-# define EAT "is eating\n"
-# define SLEEP "is sleeping\n"
-# define THINK "is thinking\n"
-# define FORK "has taken a fork\n"
-# define FORK_DOWN "has put down a fork\n"
-# define DEAD "died\n"
-# define MEALS "has eaten enough meals\n"
+# define EAT "is eating 🍝\n"
+# define SLEEP "is sleeping 💤\n"
+# define THINK "is thinking 💭\n"
+# define FORK "has taken a fork 🍴\n"
+# define DEAD "died 💀\n"
+# define MEALS "has eaten enough meals 🍽️\n"
 
 # define WRONG_ARG_NUM "Error: wrong number of arguments ❌\n"
 # define INVALID_PHILO "Error: Invalid philo input 🧐\n"
@@ -65,6 +64,7 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	int				time_to_die;
 	pthread_mutex_t	philo_lock;
+	pthread_mutex_t meal_lock;
 	int				left_fork;
 	int				right_fork;
 
@@ -80,6 +80,7 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	end_lock;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t full_lock;
 	pthread_t		monitor_thr;
 
 }					t_table;
@@ -87,7 +88,6 @@ typedef struct s_table
 // ---------------UTILS----------------
 void				ft_error(int code);
 unsigned long		get_time(void);
-long				timestamp(t_table *table);
 void				custom_usleep(unsigned long sec);
 void				print_philo(t_table *table, int id, char *msg);
 
@@ -109,9 +109,9 @@ int					is_ended(t_table *table);
 
 // ---------------GETTERS/SETTERS-----------------
 int mutex_getint(pthread_mutex_t *mutex, int *value);
-uint64_t mutex_getuint64(pthread_mutex_t *mutex, uint64_t *value);
+uint64_t mutex_getuint64(pthread_mutex_t *mutex, unsigned long *value);
 void mutex_setint(pthread_mutex_t *mutex, int *value, int new_value);
-void mutex_setuint64(pthread_mutex_t *mutex, uint64_t *value, uint64_t new_value);
+void mutex_setuint64(pthread_mutex_t *mutex, unsigned long *value, unsigned long new_value);
 int mutex_intincr(pthread_mutex_t *mutex, int *value);
 
 #endif

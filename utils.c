@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/23 18:28:34 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:43:34 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ unsigned long	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-long	timestamp(t_table *table)
-{
-	return (get_time() - table->sim_start);
-}
-
 /**
  * @brief Sleep for a given amount of time in microseconds.
  * @param usec The amount of time to sleep in microseconds.
@@ -44,26 +39,6 @@ void	custom_usleep(unsigned long milli)
 	target_time = start_time + (milli);
 	while (get_time() < target_time)
 		usleep(100);
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	unsigned char	*str1;
-	unsigned char	*str2;
-	size_t			i;
-
-	i = 0;
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
-	while (i < n && str1[i] && str2[i])
-	{
-		if (str1[i] != str2[i])
-			return (str1[i] - str2[i]);
-		i++;
-	}
-	if (i == n)
-		return (0);
-	return (str1[i] - str2[i]);
 }
 
 void	print_philo(t_table *table, int id, char *msg)

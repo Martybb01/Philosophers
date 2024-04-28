@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/24 13:19:31 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:50:48 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ void	destroy_mutex(t_table *table)
 	{
 		pthread_mutex_destroy(&table->philo[i].philo_lock);
 		pthread_mutex_destroy(&table->forks[i]);
+		pthread_mutex_destroy(&table->philo[i].meal_lock);
 		i++;
 	}
 	pthread_mutex_destroy(&table->end_lock);
 	pthread_mutex_destroy(&table->print_lock);
+	pthread_mutex_destroy(&table->full_lock);
 	free(table->forks);
 	free(table->philo);
 }
@@ -33,9 +35,7 @@ int	is_ended(t_table *table)
 {
 	int	res;
 
-	pthread_mutex_lock(&table->end_lock);
-	res = table->sim_end;
-	pthread_mutex_unlock(&table->end_lock);
+	res = mutex_getint(&table->end_lock, &table->sim_end);
 	return (res);
 }
 
@@ -48,15 +48,11 @@ void	philo_routine(t_table *table, t_philo *philo)
 			break ;
 		if (table->input.meals_count != -1)
 		{
-			pthread_mutex_lock(&philo->philo_lock);
-			philo->meals_eaten += 1;
-			if (philo->meals_eaten == table->input.meals_count)
+			if (mutex_intincr(&philo->philo_lock, &philo->meals_eaten) == table->input.meals_count)
 			{
-				pthread_mutex_unlock(&philo->philo_lock);
 				print_philo(table, philo->id, MEALS);
 				break ;
 			}
-			pthread_mutex_unlock(&philo->philo_lock);
 		}
 		philo_sleep(table, philo);
 		philo_think(table, philo);
@@ -72,11 +68,7 @@ void	*philo_life(void *data)
 	table = philo->table;
 	if (philo->id % 2 == 0)
 		custom_usleep(1);
-	// else if (philo->id == table->input.philo_count - 1)
-	// 	usleep(500);
-	pthread_mutex_lock(&philo->philo_lock);
-	philo->last_meal = get_time();
-	pthread_mutex_unlock(&philo->philo_lock);
+	mutex_setuint64(&philo->meal_lock, &philo->last_meal, get_time());
 	philo_routine(table, philo);
 	return ((void *)0);
 }
@@ -90,32 +82,26 @@ void	check_philo_health(t_table *table)
 
 	is_full = 0;
 	philo = NULL;
-	while (is_full != table->input.philo_count && !is_ended(table))
+	while (mutex_getint(&table->full_lock, &is_full) != table->input.philo_count && !is_ended(table))
 	{
 		i = -1;
-		is_full = 0;
+		mutex_setint(&table->full_lock, &is_full, 0);
 		while (++i < table->input.philo_count)
 		{
 			philo = &table->philo[i];
-			pthread_mutex_lock(&philo->philo_lock);
 			if (table->input.meals_count != -1
-				&& philo->meals_eaten == table->input.meals_count)
+				&& mutex_getint(&philo->philo_lock, &philo->meals_eaten) == table->input.meals_count)
 			{
-				is_full++;
-				pthread_mutex_unlock(&philo->philo_lock);
+				mutex_intincr(&table->full_lock, &is_full);
 				continue ;
 			}
-			if (philo->last_meal != 0 && (get_time()
-					- philo->last_meal > (uint64_t)table->input.time_to_die))
+			if (philo->last_meal != 0 && (get_time() -
+					mutex_getuint64(&philo->meal_lock, &philo->last_meal) > (unsigned long)table->input.time_to_die))
 			{
 				print_philo(table, philo->id, DEAD);
-				pthread_mutex_unlock(&philo->philo_lock);
-				pthread_mutex_lock(&table->end_lock);
-				table->sim_end = 1;
-				pthread_mutex_unlock(&table->end_lock);
+				mutex_setint(&table->end_lock, &table->sim_end, 1);
 				break ;
 			}
-			pthread_mutex_unlock(&philo->philo_lock);
 		}
 	}
 }

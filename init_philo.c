@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/24 13:09:55 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:25:47 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@ void	init_malloc(t_table *table)
 		free(table);
 		ft_error(4);
 	}
-	// table->philo->philo_thr = (pthread_t)malloc(sizeof(pthread_t)
-	// 		* table->input.philo_count);
-	// if (!table->philo->philo_thr)
-	// {
-	// 	free(table->philo);
-	// 	free(table);
-	// 	ft_error(4);
-	// }
 }
 
 void	init_mutex(t_table *table, t_philo *philo)
@@ -45,12 +37,16 @@ void	init_mutex(t_table *table, t_philo *philo)
 		ft_error(5);
 	if (pthread_mutex_init(&table->print_lock, NULL))
 		ft_error(5);
+	if (pthread_mutex_init(&table->full_lock, NULL))
+		ft_error(5);
 	i = 0;
 	while (i < table->input.philo_count)
 	{
 		if (pthread_mutex_init(&philo[i].philo_lock, NULL))
 			ft_error(5);
 		if (pthread_mutex_init(&table->forks[i], NULL))
+			ft_error(5);
+		if (pthread_mutex_init(&philo[i].meal_lock, NULL))
 			ft_error(5);
 		i++;
 	}
