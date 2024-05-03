@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/25 11:50:48 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/04 00:17:32 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,38 +73,57 @@ void	*philo_life(void *data)
 	return ((void *)0);
 }
 
-// TODO: splitta la funzione in due parti
+void update_philo_status(t_table *table, t_philo *philo, unsigned long now, int is_full)
+{
+	unsigned long	last_meal_time_since;
+	
+	if (table->input.meals_count != -1
+				&& mutex_getint(&philo->philo_lock, &philo->meals_eaten) == table->input.meals_count)
+			{
+				mutex_intincr(&table->full_lock, &is_full);
+				return ;
+			}
+		 	if (mutex_getuint64(&philo->meal_lock, &philo->last_meal) != 0)
+			{
+				last_meal_time_since = now - mutex_getuint64(&philo->meal_lock, &philo->last_meal);
+				if (last_meal_time_since > (unsigned long)table->input.time_to_die)
+				{
+					print_philo(table, philo->id, DEAD);
+					mutex_setint(&table->end_lock, &table->sim_end, 1);
+				}
+			}
+}
+
 void	check_philo_health(t_table *table)
 {
 	int		i;
 	int		is_full;
-	t_philo	*philo;
+	unsigned long	now;
+	
 
 	is_full = 0;
-	philo = NULL;
 	while (mutex_getint(&table->full_lock, &is_full) != table->input.philo_count && !is_ended(table))
 	{
+		now = get_time();
 		i = -1;
 		mutex_setint(&table->full_lock, &is_full, 0);
 		while (++i < table->input.philo_count)
 		{
-			philo = &table->philo[i];
-			if (table->input.meals_count != -1
-				&& mutex_getint(&philo->philo_lock, &philo->meals_eaten) == table->input.meals_count)
-			{
-				mutex_intincr(&table->full_lock, &is_full);
-				continue ;
-			}
-			if (philo->last_meal != 0 && (get_time() -
-					mutex_getuint64(&philo->meal_lock, &philo->last_meal) > (unsigned long)table->input.time_to_die))
-			{
-				print_philo(table, philo->id, DEAD);
-				mutex_setint(&table->end_lock, &table->sim_end, 1);
+			update_philo_status(table, &table->philo[i], now, is_full);
+			if (is_ended(table))
 				break ;
-			}
 		}
 	}
 }
+/*
+if (philo->last_meal != 0 && (now -
+		mutex_getuint64(&philo->meal_lock, &philo->last_meal) > (unsigned long)table->input.time_to_die))
+	{
+	print_philo(table, philo->id, DEAD);
+	mutex_setint(&table->end_lock, &table->sim_end, 1);
+	break ;
+	}
+*/
 
 int	init_philo_threads(t_table *table)
 {

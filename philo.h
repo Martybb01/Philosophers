@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/25 11:44:34 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/02 22:33:50 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int					is_ended(t_table *table);
 
 // ---------------GETTERS/SETTERS-----------------
 int mutex_getint(pthread_mutex_t *mutex, int *value);
-uint64_t mutex_getuint64(pthread_mutex_t *mutex, unsigned long *value);
+unsigned long mutex_getuint64(pthread_mutex_t *mutex, unsigned long *value);
 void mutex_setint(pthread_mutex_t *mutex, int *value, int new_value);
 void mutex_setuint64(pthread_mutex_t *mutex, unsigned long *value, unsigned long new_value);
 int mutex_intincr(pthread_mutex_t *mutex, int *value);

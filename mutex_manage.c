@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 13:13:23 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/25 11:21:00 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/02 22:33:43 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int mutex_getint(pthread_mutex_t *mutex, int *value)
 	return (ret);
 }
 
-uint64_t mutex_getuint64(pthread_mutex_t *mutex, unsigned long *value)
+unsigned long mutex_getuint64(pthread_mutex_t *mutex, unsigned long *value)
 {
-	uint64_t ret;
+	unsigned long ret;
 
 	pthread_mutex_lock(mutex);
 	ret = *value;
