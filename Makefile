@@ -11,7 +11,8 @@ libft.c \
 init_philo.c \
 init_philo_thr.c \
 philo_actions.c \
-mutex_manage.c 
+mutex_manage.c \
+time.c
 
 OBJS_MAIN := $(SRCS:.c=.o)
 

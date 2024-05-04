@@ -6,38 +6,11 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/05/04 00:17:32 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:23:24 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	destroy_mutex(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->input.philo_count)
-	{
-		pthread_mutex_destroy(&table->philo[i].philo_lock);
-		pthread_mutex_destroy(&table->forks[i]);
-		pthread_mutex_destroy(&table->philo[i].meal_lock);
-		i++;
-	}
-	pthread_mutex_destroy(&table->end_lock);
-	pthread_mutex_destroy(&table->print_lock);
-	pthread_mutex_destroy(&table->full_lock);
-	free(table->forks);
-	free(table->philo);
-}
-
-int	is_ended(t_table *table)
-{
-	int	res;
-
-	res = mutex_getint(&table->end_lock, &table->sim_end);
-	return (res);
-}
 
 void	philo_routine(t_table *table, t_philo *philo)
 {
@@ -48,7 +21,8 @@ void	philo_routine(t_table *table, t_philo *philo)
 			break ;
 		if (table->input.meals_count != -1)
 		{
-			if (mutex_intincr(&philo->philo_lock, &philo->meals_eaten) == table->input.meals_count)
+			if (mutex_intincr(&philo->philo_lock,
+					&philo->meals_eaten) == table->input.meals_count)
 			{
 				print_philo(table, philo->id, MEALS);
 				break ;
@@ -68,41 +42,43 @@ void	*philo_life(void *data)
 	table = philo->table;
 	if (philo->id % 2 == 0)
 		custom_usleep(1);
-	mutex_setuint64(&philo->meal_lock, &philo->last_meal, get_time());
+	mutex_setulong(&philo->meal_lock, &philo->last_meal, get_time());
 	philo_routine(table, philo);
 	return ((void *)0);
 }
 
-void update_philo_status(t_table *table, t_philo *philo, unsigned long now, int is_full)
+void	update_philo_status(t_table *table, t_philo *philo, unsigned long now,
+		int is_full)
 {
 	unsigned long	last_meal_time_since;
-	
-	if (table->input.meals_count != -1
-				&& mutex_getint(&philo->philo_lock, &philo->meals_eaten) == table->input.meals_count)
-			{
-				mutex_intincr(&table->full_lock, &is_full);
-				return ;
-			}
-		 	if (mutex_getuint64(&philo->meal_lock, &philo->last_meal) != 0)
-			{
-				last_meal_time_since = now - mutex_getuint64(&philo->meal_lock, &philo->last_meal);
-				if (last_meal_time_since > (unsigned long)table->input.time_to_die)
-				{
-					print_philo(table, philo->id, DEAD);
-					mutex_setint(&table->end_lock, &table->sim_end, 1);
-				}
-			}
+
+	if (table->input.meals_count != -1 && mutex_getint(&philo->philo_lock,
+			&philo->meals_eaten) == table->input.meals_count)
+	{
+		mutex_intincr(&table->full_lock, &is_full);
+		return ;
+	}
+	if (mutex_getulong(&philo->meal_lock, &philo->last_meal) != 0)
+	{
+		last_meal_time_since = now - mutex_getulong(&philo->meal_lock,
+				&philo->last_meal);
+		if (last_meal_time_since > (unsigned long)table->input.time_to_die)
+		{
+			print_philo(table, philo->id, DEAD);
+			mutex_setint(&table->end_lock, &table->sim_end, 1);
+		}
+	}
 }
 
 void	check_philo_health(t_table *table)
 {
-	int		i;
-	int		is_full;
+	int				i;
+	int				is_full;
 	unsigned long	now;
-	
 
 	is_full = 0;
-	while (mutex_getint(&table->full_lock, &is_full) != table->input.philo_count && !is_ended(table))
+	while (mutex_getint(&table->full_lock, &is_full) != table->input.philo_count
+		&& !is_ended(table))
 	{
 		now = get_time();
 		i = -1;
@@ -115,15 +91,6 @@ void	check_philo_health(t_table *table)
 		}
 	}
 }
-/*
-if (philo->last_meal != 0 && (now -
-		mutex_getuint64(&philo->meal_lock, &philo->last_meal) > (unsigned long)table->input.time_to_die))
-	{
-	print_philo(table, philo->id, DEAD);
-	mutex_setint(&table->end_lock, &table->sim_end, 1);
-	break ;
-	}
-*/
 
 int	init_philo_threads(t_table *table)
 {

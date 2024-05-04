@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/05/02 22:33:50 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:29:13 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void				ft_error(int code);
 unsigned long		get_time(void);
 void				custom_usleep(unsigned long sec);
 void				print_philo(t_table *table, int id, char *msg);
+void	destroy_mutex(t_table *table);
+int					is_ended(t_table *table);
 
 // ---------------INIT---------------
 int					init_input(int ac, char **av, t_table *table);
@@ -105,13 +107,12 @@ void				ft_putstr_fd(char *str, int fd);
 void				philo_sleep(t_table *table, t_philo *philo);
 void				philo_eat(t_table *table, t_philo *philo);
 void				philo_think(t_table *table, t_philo *philo);
-int					is_ended(t_table *table);
 
 // ---------------GETTERS/SETTERS-----------------
 int mutex_getint(pthread_mutex_t *mutex, int *value);
-unsigned long mutex_getuint64(pthread_mutex_t *mutex, unsigned long *value);
+unsigned long mutex_getulong(pthread_mutex_t *mutex, unsigned long *value);
 void mutex_setint(pthread_mutex_t *mutex, int *value, int new_value);
-void mutex_setuint64(pthread_mutex_t *mutex, unsigned long *value, unsigned long new_value);
+void mutex_setulong(pthread_mutex_t *mutex, unsigned long *value, unsigned long new_value);
 int mutex_intincr(pthread_mutex_t *mutex, int *value);
 
 #endif

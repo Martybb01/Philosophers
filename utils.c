@@ -6,40 +6,11 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/25 11:43:34 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:23:34 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/**
- * @brief Get the current time in milliseconds.
- * @return The current time in milliseconds as a long.
- * @note track how long a philo has been thinking, eating, or sleeping.
- */
-unsigned long	get_time(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
-		return (-1);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
-/**
- * @brief Sleep for a given amount of time in microseconds.
- * @param usec The amount of time to sleep in microseconds.
- */
-void	custom_usleep(unsigned long milli)
-{
-	unsigned long	start_time;
-	unsigned long	target_time;
-
-	start_time = get_time();
-	target_time = start_time + (milli);
-	while (get_time() < target_time)
-		usleep(100);
-}
 
 void	print_philo(t_table *table, int id, char *msg)
 {
@@ -60,6 +31,14 @@ void	print_philo(t_table *table, int id, char *msg)
 	pthread_mutex_unlock(&table->print_lock);
 }
 
+int	is_ended(t_table *table)
+{
+	int	res;
+
+	res = mutex_getint(&table->end_lock, &table->sim_end);
+	return (res);
+}
+
 void	ft_error(int code)
 {
 	if (code == 4)
@@ -73,4 +52,23 @@ void	ft_error(int code)
 		ft_putstr_fd("Error: Invalid thread\n", 2);
 	}
 	exit(1);
+}
+
+void	destroy_mutex(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->input.philo_count)
+	{
+		pthread_mutex_destroy(&table->philo[i].philo_lock);
+		pthread_mutex_destroy(&table->forks[i]);
+		pthread_mutex_destroy(&table->philo[i].meal_lock);
+		i++;
+	}
+	pthread_mutex_destroy(&table->end_lock);
+	pthread_mutex_destroy(&table->print_lock);
+	pthread_mutex_destroy(&table->full_lock);
+	free(table->forks);
+	free(table->philo);
 }
