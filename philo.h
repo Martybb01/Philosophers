@@ -64,7 +64,7 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	int				time_to_die;
 	pthread_mutex_t	philo_lock;
-	pthread_mutex_t meal_lock;
+	pthread_mutex_t	meal_lock;
 	int				left_fork;
 	int				right_fork;
 
@@ -80,7 +80,7 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	end_lock;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t full_lock;
+	pthread_mutex_t	full_lock;
 	pthread_t		monitor_thr;
 
 }					t_table;
@@ -90,7 +90,7 @@ void				ft_error(int code);
 unsigned long		get_time(void);
 void				custom_usleep(unsigned long sec);
 void				print_philo(t_table *table, int id, char *msg);
-void	destroy_mutex(t_table *table);
+void				destroy_mutex(t_table *table);
 int					is_ended(t_table *table);
 
 // ---------------INIT---------------
@@ -109,10 +109,13 @@ void				philo_eat(t_table *table, t_philo *philo);
 void				philo_think(t_table *table, t_philo *philo);
 
 // ---------------GETTERS/SETTERS-----------------
-int mutex_getint(pthread_mutex_t *mutex, int *value);
-unsigned long mutex_getulong(pthread_mutex_t *mutex, unsigned long *value);
-void mutex_setint(pthread_mutex_t *mutex, int *value, int new_value);
-void mutex_setulong(pthread_mutex_t *mutex, unsigned long *value, unsigned long new_value);
-int mutex_intincr(pthread_mutex_t *mutex, int *value);
+int					mutex_getint(pthread_mutex_t *mutex, int *value);
+unsigned long		mutex_getulong(pthread_mutex_t *mutex,
+						unsigned long *value);
+void				mutex_setint(pthread_mutex_t *mutex, int *value,
+						int new_value);
+void				mutex_setulong(pthread_mutex_t *mutex, unsigned long *value,
+						unsigned long new_value);
+int					mutex_intincr(pthread_mutex_t *mutex, int *value);
 
 #endif

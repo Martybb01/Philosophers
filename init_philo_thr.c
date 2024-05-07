@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/05/04 15:23:24 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:32:06 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	*philo_life(void *data)
 }
 
 void	update_philo_status(t_table *table, t_philo *philo, unsigned long now,
-		int is_full)
+		int *is_full)
 {
 	unsigned long	last_meal_time_since;
 
 	if (table->input.meals_count != -1 && mutex_getint(&philo->philo_lock,
 			&philo->meals_eaten) == table->input.meals_count)
 	{
-		mutex_intincr(&table->full_lock, &is_full);
+		mutex_intincr(&table->full_lock, is_full);
 		return ;
 	}
 	if (mutex_getulong(&philo->meal_lock, &philo->last_meal) != 0)
@@ -85,7 +85,7 @@ void	check_philo_health(t_table *table)
 		mutex_setint(&table->full_lock, &is_full, 0);
 		while (++i < table->input.philo_count)
 		{
-			update_philo_status(table, &table->philo[i], now, is_full);
+			update_philo_status(table, &table->philo[i], now, &is_full);
 			if (is_ended(table))
 				break ;
 		}
