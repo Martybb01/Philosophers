@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/04/25 11:25:47 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:02:19 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	init_malloc(t_table *table)
 {
-	table->philo = malloc(sizeof(t_philo) * table->input.philo_count);
+	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->input.philo_count);
 	if (!table->philo)
 	{
 		free(table);
 		ft_error(4);
 	}
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->input.philo_count);
+	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->input.philo_count);
 	if (!table->forks)
 	{
 		free(table->philo);
@@ -59,15 +59,10 @@ void	assign_forks(t_table *table, int i)
 		table->philo[i].left_fork = 0;
 		table->philo[i].right_fork = table->input.philo_count - 1;
 	}
-	else if (i == table->input.philo_count - 1)
-	{
-		table->philo[i].left_fork = table->input.philo_count - 2;
-		table->philo[i].right_fork = table->input.philo_count - 1;
-	}
 	else
 	{
-		table->philo[i].right_fork = table->philo[i].id - 2;
-		table->philo[i].left_fork = table->philo[i].id - 1;
+		table->philo[i].left_fork = i - 1;
+		table->philo[i].right_fork = i;
 	}
 }
 
