@@ -14,13 +14,15 @@
 
 void	init_malloc(t_table *table)
 {
-	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->input.philo_count);
+	table->philo = (t_philo *)malloc(sizeof(t_philo)
+			* table->input.philo_count);
 	if (!table->philo)
 	{
 		free(table);
 		ft_error(4);
 	}
-	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->input.philo_count);
+	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* table->input.philo_count);
 	if (!table->forks)
 	{
 		free(table->philo);

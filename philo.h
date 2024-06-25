@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/05/04 15:29:13 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:36:19 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_table
 	pthread_mutex_t	end_lock;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	full_lock;
-	pthread_t		monitor_thr;
 
 }					t_table;
 
