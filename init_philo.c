@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/06/15 19:02:19 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:03:17 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	assign_forks(t_table *table, int i)
 	}
 	else
 	{
-		table->philo[i].left_fork = i - 1;
-		table->philo[i].right_fork = i;
+		table->philo[i].left_fork = i;
+		table->philo[i].right_fork = i - 1;
 	}
 }
 
