@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/06/28 12:40:15 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:29:28 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	update_philo_status(t_table *table, t_philo *philo, unsigned long now,
 	{
 		last_meal_time_since = now - mutex_getulong(&philo->meal_lock,
 				&philo->last_meal);
-		if (last_meal_time_since > (unsigned long)table->input.time_to_die + 4)
+		if (last_meal_time_since > (unsigned long)table->input.time_to_die + 3)
 		{
 			print_philo(table, philo->id, DEAD);
 			mutex_setint(&table->end_lock, &table->sim_end, 1);
