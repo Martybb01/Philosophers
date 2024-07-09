@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/06/28 14:29:28 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:22:30 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	philo_routine(t_table *table, t_philo *philo)
 		if (table->input.meals_count != -1)
 		{
 			if (mutex_intincr(&philo->philo_lock,
-					&philo->meals_eaten) == table->input.meals_count)
+					&philo->meals_eaten) >= table->input.meals_count)
 				break ;
 		}
 		philo_sleep(table, philo);
@@ -37,7 +37,7 @@ void	*philo_life(void *data)
 
 	philo = (t_philo *)data;
 	table = philo->table;
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 		custom_usleep(1);
 	mutex_setulong(&philo->meal_lock, &philo->last_meal, get_time());
 	philo_routine(table, philo);
@@ -59,7 +59,7 @@ void	update_philo_status(t_table *table, t_philo *philo, unsigned long now,
 	{
 		last_meal_time_since = now - mutex_getulong(&philo->meal_lock,
 				&philo->last_meal);
-		if (last_meal_time_since > (unsigned long)table->input.time_to_die + 3)
+		if (last_meal_time_since > (unsigned long)table->input.time_to_die)
 		{
 			print_philo(table, philo->id, DEAD);
 			mutex_setint(&table->end_lock, &table->sim_end, 1);

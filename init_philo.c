@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/06/28 14:40:52 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/02 12:31:24 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	assign_forks(t_table *table, int i)
 {
 	if (i == 0)
 	{
-		table->philo[i].left_fork = 0;
+		table->philo[i].left_fork = i;
 		table->philo[i].right_fork = table->input.philo_count - 1;
 	}
 	else
