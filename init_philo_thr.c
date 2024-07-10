@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/07/10 18:40:34 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:33:51 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,8 @@ void	philo_routine(t_table *table, t_philo *philo)
             mutex_setint(&table->end_lock, &table->sim_end, 1);
 			break ;
 		}
-		if (table->input.meals_count != -1)
-		{
-			if (philo->meals_eaten >= table->input.meals_count)
-			{
-				break ;
-			}
-		}
+		if (table->input.meals_count != -1 && philo->meals_eaten >= table->input.meals_count)
+			break ;
 		philo_sleep(table, philo);
 		philo_think(table, philo);
 	}
@@ -51,7 +46,7 @@ void	*philo_life(void *data)
 
 void	update_death( t_philo *philo, unsigned long now)
 {
-	unsigned long	last_meal_time_since;
+	unsigned long last_meal_time_since;
 
 	if (mutex_getulong(&philo->philo_lock, &philo->last_meal) != 0)
 	{

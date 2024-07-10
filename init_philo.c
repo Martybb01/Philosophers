@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 12:59:42 by marboccu          #+#    #+#             */
-/*   Updated: 2024/07/10 17:39:36 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:56:34 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	init_mutex(t_table *table, t_philo *philo)
 	if (pthread_mutex_init(&table->end_lock, NULL))
 		ft_error(5);
 	if (pthread_mutex_init(&table->print_lock, NULL))
-		ft_error(5);
-	if (pthread_mutex_init(&table->full_lock, NULL))
 		ft_error(5);
 	i = 0;
 	while (i < table->input.philo_count)

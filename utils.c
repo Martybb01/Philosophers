@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 10:39:56 by marboccu          #+#    #+#             */
-/*   Updated: 2024/07/10 17:40:47 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:58:14 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	destroy_mutex(t_table *table)
 	}
 	pthread_mutex_destroy(&table->end_lock);
 	pthread_mutex_destroy(&table->print_lock);
-	pthread_mutex_destroy(&table->full_lock);
 	free(table->forks);
 	free(table->philo);
 }
