@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 12:41:07 by marboccu          #+#    #+#             */
-/*   Updated: 2024/07/10 17:39:26 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:40:34 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ int is_satisfied(t_table *table)
 			is_full++;
 			if (is_full == table->input.philo_count)
 			{
-				is_ended(table);
-				return (0);
+				mutex_setint(&table->end_lock, &table->sim_end, 1);
+				return (1);
 			}
 		}
 	}
-	return (1);
+	return (0);
 }
 
 void	check_philo_health(t_table *table)
@@ -96,8 +96,8 @@ void	check_philo_health(t_table *table)
 	{
 		now = get_time();
 		i = -1;
-		if (table->input.meals_count != -1 && is_satisfied(table))
-			return ;
+		if (table->input.meals_count != -1 && is_satisfied(table) == 1)
+			break ;
 		while (++i < table->input.philo_count)
 		{
 			update_death(&table->philo[i], now);
