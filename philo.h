@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/06/25 15:36:19 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:40:52 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_philo
 	unsigned long	last_meal;
 	int				time_to_die;
 	pthread_mutex_t	philo_lock;
-	pthread_mutex_t	meal_lock;
 	int				left_fork;
 	int				right_fork;
 
