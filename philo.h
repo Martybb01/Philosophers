@@ -6,7 +6,7 @@
 /*   By: marboccu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 11:36:38 by marboccu          #+#    #+#             */
-/*   Updated: 2024/07/10 17:40:52 by marboccu         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:06:07 by marboccu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void				ft_putstr_fd(char *str, int fd);
 void				philo_sleep(t_table *table, t_philo *philo);
 void				philo_eat(t_table *table, t_philo *philo);
 void				philo_think(t_table *table, t_philo *philo);
+void				check_philo_health(t_table *table);
 
 // ---------------GETTERS/SETTERS-----------------
 int					mutex_getint(pthread_mutex_t *mutex, int *value);
